@@ -4,12 +4,12 @@ public class PostfixTask
 {
     public double Run()
     {
-        var stack = new Stack<double>();
+        var stack = new Stack<double>(true);
         var commands = File.ReadAllText("/Users/slava/Documents/Образование/ЧелГУ/Курс 2/ААС/Lab3/StackTask/PostfixTask/input.txt").Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var cmd in commands)
         {
-            if (double.TryParse(cmd, out double value))
+            if (double.TryParse(cmd, out var value))
             {
                 stack.Push(value);
             }
@@ -19,37 +19,37 @@ public class PostfixTask
                 {
                     case "+":
                     {
-                        double b = stack.Pop();
-                        double a = stack.Pop();
+                        var b = stack.Pop();
+                        var a = stack.Pop();
                         stack.Push(a + b);
                         break;
                     }
                     case "-":
                     {
-                        double b = stack.Pop();
-                        double a = stack.Pop();
+                        var b = stack.Pop();
+                        var a = stack.Pop();
                         stack.Push(a - b);
                         break;
                     }
                     case "*":
                     {
-                        double b = stack.Pop();
-                        double a = stack.Pop();
+                        var b = stack.Pop();
+                        var a = stack.Pop();
                         stack.Push(a * b);
                         break;
                     }
                     case ":":
                     case "/":
                     {
-                        double b = stack.Pop();
-                        double a = stack.Pop();
+                        var b = stack.Pop();
+                        var a = stack.Pop();
                         stack.Push(a / b);
                         break;
                     }
                     case "^":
                     {
-                        double b = stack.Pop();
-                        double a = stack.Pop();
+                        var b = stack.Pop();
+                        var a = stack.Pop();
                         stack.Push(Math.Pow(a, b));
                         break;
                     }

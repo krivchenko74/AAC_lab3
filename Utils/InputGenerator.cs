@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Lab3.StackTask
+namespace Lab3.Utils
 {
     /// <summary>
     /// Режим генерации команд.

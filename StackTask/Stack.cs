@@ -32,7 +32,7 @@ public class Stack<T>
     
     public void Push(T elem)
     {
-        Node<T> newNode = new Node<T>(elem);
+        var newNode = new Node<T>(elem);
         newNode.Next = top;
         top = newNode;
         Count++;
@@ -43,7 +43,7 @@ public class Stack<T>
     {
         if (top == null)
         {
-            if (ShowLogs) Console.WriteLine("Stack is empty");
+            if (ShowLogs) Console.WriteLine("Stack is empty!");
         }
         else
         {
@@ -56,10 +56,10 @@ public class Stack<T>
     {
         if (IsEmpty())
         {
-            if (ShowLogs) Console.WriteLine("Стек пуст!");
+            // if (ShowLogs) Console.WriteLine("Stack is empty!");
             return default;
         }
-        T value = top!.Data;
+        var value = top!.Data;
         if (ShowLogs) Console.WriteLine($"Popped {value.ToString()}");
         top = top.Next;
         Count--;
@@ -70,10 +70,10 @@ public class Stack<T>
     {
         if (IsEmpty())
         {
-            if (ShowLogs) Console.WriteLine("Стек пуст!");
+            if (ShowLogs) Console.WriteLine("Stack is empty!");
             return default;
         }
-        T value = top!.Data;
+        var value = top!.Data;
         if (ShowLogs) Console.WriteLine($"Peeked {value.ToString()}");
         return value;
     }
@@ -82,7 +82,7 @@ public class Stack<T>
     {
         if (IsEmpty())
         {
-            if (ShowLogs) Console.WriteLine("Стек пуст!");
+            if (ShowLogs) Console.WriteLine("Stack is empty!");
             return default;
         }
         if (ShowLogs) Console.WriteLine($"Top: {top!.Data.ToString()}");
@@ -93,12 +93,12 @@ public class Stack<T>
     {
         if (IsEmpty())
         {
-            if (ShowLogs) Console.WriteLine("Стек пуст!");
+            if (ShowLogs) Console.WriteLine("Stack is empty!");
             return;
         }
 
-        if (ShowLogs) Console.Write("Содержимое стека: ");
-        Node<T>? current = top;
+        if (ShowLogs) Console.Write("Stack items: ");
+        var current = top;
         while (current != null)
         {
             if (ShowLogs) Console.Write($"{current.Data} ");

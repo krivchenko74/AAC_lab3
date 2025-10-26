@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Lab3.QueueTask;
 using Lab3.QueueTask.TextAnalyzerTask;
-using Lab3.StackTask;
+using Lab3.StackTask.StackTextAnalyzerTask;
 using Lab3.Utils;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -72,7 +72,7 @@ public class TabGenerator
             x[i] = i + 1;
         }
         
-        var y = Benchmark.RunRange(maxN, () => new TextAnalyzer());
+        var y = Benchmark.RunRange(maxN, () => new TextAnalyzerTask());
         return new TabItemModel("StackTextAnalyzer", CreatePlot("StackTextAnalyzer", x, y));
     }
     

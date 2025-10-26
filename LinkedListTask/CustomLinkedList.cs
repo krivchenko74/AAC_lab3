@@ -14,7 +14,7 @@ namespace Lab3.LinkedListTask
         }
     }
     
-    public class CustomLinkedList<T>
+    public class CustomLinkedList<T> where T : IComparable<T>
     {
         public Node<T>? Head { get; private set; }
         public Node<T>? Tail { get; private set; }
@@ -364,8 +364,34 @@ namespace Lab3.LinkedListTask
             
             copyTail!.Next = current.Next;
             current.Next = copyHead;
-            
-            // Tail = copyTail;
         }
+        
+        // task 4.6
+        public void InsertSorted(T value)
+        {
+            if (Head == null || value.CompareTo(Head.Data) < 0)
+            {
+                AddFirst(value);
+                return;
+            }
+
+            var current = Head;
+            while (current.Next != null && current.Next.Data.CompareTo(value) < 0)
+            {
+                current = current.Next;
+            }
+
+            var newNode = new Node<T>(value);
+            newNode.Next = current.Next;
+            current.Next = newNode;
+
+            if (newNode.Next == null)
+                Tail = newNode;
+
+            Count++;
+        }
+
     }
+    
+    
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lab3.StackTask.InfixToPostfix
 {
-    public class InfixToPostfix
+    public class InfixToPostfixTask
     {
         private static readonly Dictionary<string, int> Precedence = new()
         {
@@ -20,39 +20,36 @@ namespace Lab3.StackTask.InfixToPostfix
 
         public void Run()
         {
-            string filePath = "/Users/slava/Documents/Образование/ЧелГУ/Курс 2/ААС/Lab3/StackTask/InfixToPostfix/input.txt";
+            var filePath = "/Users/slava/Documents/Образование/ЧелГУ/Курс 2/ААС/Lab3/StackTask/InfixToPostfix/input.txt";
             if (!File.Exists(filePath))
             {
                 Console.WriteLine($"Файл {filePath} не найден!");
                 return;
             }
 
-            string infix = File.ReadAllText(filePath).Trim();
+            var infix = File.ReadAllText(filePath).Trim();
             Console.WriteLine($"Инфиксное выражение: {infix}");
 
-            string postfix = ConvertToPostfix(infix);
+            var postfix = ConvertToPostfix(infix);
             Console.WriteLine($"Постфиксное выражение: {postfix}");
         }
 
-        public static string ConvertToPostfix(string infix)
+        private static string ConvertToPostfix(string infix)
         {
-            string[] tokens = infix.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            Stack<string> stack = new Stack<string>();
-            StringBuilder output = new StringBuilder();
+            var tokens = infix.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var stack = new Stack<string>();
+            var output = new StringBuilder();
 
-            foreach (string token in tokens)
+            foreach (var token in tokens)
             {
-                // Если число — сразу в выход
                 if (double.TryParse(token, out _))
                 {
                     output.Append(token + " ");
                 }
-                // Если функция (sin, cos, ln)
                 else if (IsFunction(token))
                 {
                     stack.Push(token);
                 }
-                // Если оператор (+, -, *, /, ^)
                 else if (IsOperator(token))
                 {
                     while (stack.Count > 0 && IsOperator(stack.Peek()) &&
@@ -62,19 +59,17 @@ namespace Lab3.StackTask.InfixToPostfix
                     }
                     stack.Push(token);
                 }
-                // Открывающая скобка
                 else if (token == "(")
                 {
                     stack.Push(token);
                 }
-                // Закрывающая скобка
                 else if (token == ")")
                 {
                     while (stack.Count > 0 && stack.Peek() != "(")
                         output.Append(stack.Pop() + " ");
 
                     if (stack.Count > 0 && stack.Peek() == "(")
-                        stack.Pop(); // удалить "("
+                        stack.Pop();
 
                     if (stack.Count > 0 && IsFunction(stack.Peek()))
                         output.Append(stack.Pop() + " ");
@@ -84,8 +79,7 @@ namespace Lab3.StackTask.InfixToPostfix
                     Console.WriteLine($"Неизвестный токен: {token}");
                 }
             }
-
-            // Выталкиваем остаток стека
+            
             while (stack.Count > 0)
             {
                 output.Append(stack.Pop() + " ");
