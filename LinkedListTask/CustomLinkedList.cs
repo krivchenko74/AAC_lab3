@@ -42,10 +42,7 @@ namespace Lab3.LinkedListTask
             }
             Count++;
         }
-
-        /// <summary>
-        /// Добавить элемент в начало списка.
-        /// </summary>
+        
         public void AddFirst(T data)
         {
             var node = new Node<T>(data);
@@ -67,7 +64,7 @@ namespace Lab3.LinkedListTask
             if (Head == null)
                 return default;
 
-            T value = Head.Data;
+            var value = Head.Data;
             Head = Head.Next;
             if (Head == null)
                 Tail = null;
@@ -82,20 +79,20 @@ namespace Lab3.LinkedListTask
 
             if (Head.Next == null)
             {
-                T val = Head.Data;
+                var val = Head.Data;
                 Head = null;
                 Tail = null;
                 Count = 0;
                 return val;
             }
 
-            Node<T> current = Head;
+            var current = Head;
             while (current.Next != null && current.Next.Next != null)
             {
                 current = current.Next;
             }
 
-            T value = current.Next!.Data;
+            var value = current.Next!.Data;
             current.Next = null;
             Tail = current;
             Count--;
@@ -109,7 +106,7 @@ namespace Lab3.LinkedListTask
         
         public bool Contains(T value)
         {
-            Node<T>? current = Head;
+            var current = Head;
             while (current != null)
             {
                 if (Equals(current.Data, value))
@@ -130,7 +127,7 @@ namespace Lab3.LinkedListTask
                 return true;
             }
 
-            Node<T> current = Head;
+            var current = Head;
             while (current.Next != null)
             {
                 if (Equals(current.Next.Data, value))
@@ -148,12 +145,12 @@ namespace Lab3.LinkedListTask
         
         public bool InsertAfter(T target, T newValue)
         {
-            Node<T>? current = Head;
+            var current = Head;
             while (current != null)
             {
                 if (Equals(current.Data, target))
                 {
-                    Node<T> node = new Node<T>(newValue);
+                    var node = new Node<T>(newValue);
                     node.Next = current.Next;
                     current.Next = node;
                     if (current == Tail)
@@ -177,12 +174,12 @@ namespace Lab3.LinkedListTask
                 return true;
             }
 
-            Node<T> current = Head;
+            var current = Head;
             while (current.Next != null)
             {
                 if (Equals(current.Next.Data, target))
                 {
-                    Node<T> node = new Node<T>(newValue);
+                    var node = new Node<T>(newValue);
                     node.Next = current.Next;
                     current.Next = node;
                     Count++;
@@ -202,7 +199,7 @@ namespace Lab3.LinkedListTask
                 return;
             }
 
-            Node<T>? current = Head;
+            var current = Head;
             while (current != null)
             {
                 Console.Write(current.Data + " ");
@@ -246,7 +243,7 @@ namespace Lab3.LinkedListTask
             if (Head == null || Head.Next == null)
                 return;
 
-            T? lastValue = RemoveLast();
+            var lastValue = RemoveLast();
             if (lastValue != null)
                 AddFirst(lastValue);
         }
@@ -256,7 +253,7 @@ namespace Lab3.LinkedListTask
             if (Head == null || Head.Next == null)
                 return; 
 
-            T? firstValue = RemoveFirst();
+            var firstValue = RemoveFirst();
             if (firstValue != null)
                 AddLast(firstValue);
         }
@@ -273,11 +270,11 @@ namespace Lab3.LinkedListTask
             }
 
             var uniqueValues = new HashSet<int>();
-            Node<T>? current = Head;
+            var current = Head;
 
             while (current != null)
             {
-                int value = (int)(object)current.Data;
+                var value = (int)(object)current.Data;
                 uniqueValues.Add(value);
                 current = current.Next;
             }
@@ -291,7 +288,7 @@ namespace Lab3.LinkedListTask
                 return;
             
             var counts = new Dictionary<T, int>();
-            Node<T>? current = Head;
+            var current = Head;
 
             while (current != null)
             {
@@ -304,9 +301,9 @@ namespace Lab3.LinkedListTask
                 current = current.Next;
             }
             
-            Node<T>? dummy = new Node<T>(default!); // фиктивный узел перед головой
+            var dummy = new Node<T>(default!); // фиктивный узел перед головой
             dummy.Next = Head;
-            Node<T> prev = dummy;
+            var prev = dummy;
             current = Head;
 
             while (current != null)
@@ -336,7 +333,7 @@ namespace Lab3.LinkedListTask
             if (Head == null)
                 return;
             
-            Node<T>? current = Head;
+            var current = Head;
             while (current != null && !Equals(current.Data, x))
                 current = current.Next;
 
@@ -390,8 +387,188 @@ namespace Lab3.LinkedListTask
 
             Count++;
         }
+        
+        //task 4.7
+        public bool RemoveAll(T value)
+        {
+            if (Head == null)
+                return false;
 
+            var removed = false;
+            var dummy = new Node<T>(default!); // фиктивный узел
+            dummy.Next = Head;
+            var current = dummy;
+
+            while (current.Next != null)
+            {
+                if (Equals(current.Next.Data, value))
+                {
+                    current.Next = current.Next.Next;
+                    Count--;
+                    removed = true;
+                }
+                else
+                {
+                    current = current.Next;
+                }
+            }
+
+            Head = dummy.Next;
+            if (Head == null)
+                Tail = null;
+            else
+            {
+                Tail = current;
+            }
+
+            return removed;
+        }
+        
+        // task 4.8
+        public bool InsertBeforeElement(T target, T newValue)
+        {
+            if (Head == null)
+                return false;
+            
+            if (Equals(Head.Data, target))
+            {
+                AddFirst(newValue);
+                return true;
+            }
+
+            var current = Head;
+            
+            while (current.Next != null)
+            {
+                if (Equals(current.Next.Data, target))
+                {
+                    var newNode = new Node<T>(newValue);
+                    newNode.Next = current.Next;
+                    current.Next = newNode;
+                    Count++;
+                    return true;
+                }
+                current = current.Next;
+            }
+            
+            return false;
+        }
+
+        // task 4.9
+        public void AppendList(CustomLinkedList<T> other)
+        {
+            if (other == null || other.Head == null)
+                return;
+
+            if (Head == null)
+            {
+                Head = other.Head;
+                Tail = other.Tail;
+                Count = other.Count;
+            }
+            else
+            {
+                Tail!.Next = other.Head;
+                Tail = other.Tail;
+                Count += other.Count;
+            }
+        }
+        
+        // task 4.10
+        public (CustomLinkedList<T> firstPart, CustomLinkedList<T> secondPart) SplitByValue(T value)
+        {
+            var firstPart = new CustomLinkedList<T>();
+            var secondPart = new CustomLinkedList<T>();
+
+            if (Head == null)
+                return (firstPart, secondPart);
+
+            var current = Head;
+            Node<T>? splitNode = null;
+            
+            while (current != null)
+            {
+                firstPart.AddLast(current.Data);
+                if (Equals(current.Data, value))
+                {
+                    splitNode = current.Next;
+                    break;
+                }
+                current = current.Next;
+            }
+            
+            if (splitNode != null)
+            {
+                while (splitNode != null)
+                {
+                    secondPart.AddLast(splitNode.Data);
+                    splitNode = splitNode.Next;
+                }
+            }
+
+            return (firstPart, secondPart);
+        }
+        
+        // task 4.11
+        public void Duplicate()
+        {
+            if (Head == null)
+                return;
+
+            Node<T>? current = Head;
+            Node<T>? copyHead = null;
+            Node<T>? copyTail = null;
+            
+            while (current != null)
+            {
+                var newNode = new Node<T>(current.Data);
+                if (copyHead == null)
+                {
+                    copyHead = newNode;
+                    copyTail = newNode;
+                }
+                else
+                {
+                    copyTail!.Next = newNode;
+                    copyTail = newNode;
+                }
+                current = current.Next;
+            }
+
+            Tail!.Next = copyHead;
+            Tail = copyTail;
+
+            Count *= 2; 
+        }
+        
+        // task 4.12
+        public bool SwapElements(T value1, T value2)
+        {
+            if (Head == null || Equals(value1, value2))
+                return false;
+
+            Node<T>? node1 = null;
+            Node<T>? node2 = null;
+            Node<T>? current = Head;
+            
+            while (current != null)
+            {
+                if (Equals(current.Data, value1))
+                    node1 = current;
+                else if (Equals(current.Data, value2))
+                    node2 = current;
+
+                if (node1 != null && node2 != null)
+                    break;
+
+                current = current.Next;
+            }
+            
+            if (node1 == null || node2 == null)
+                return false;
+            (node1.Data, node2.Data) = (node2.Data, node1.Data);
+
+            return true;
+        }
     }
-    
-    
 }
