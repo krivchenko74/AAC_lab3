@@ -42,7 +42,7 @@ public class LinkedQueue<T>
     
     public void Enqueue(T elem)
     {
-        Node<T> node = new Node<T>(elem);
+        var node = new Node<T>(elem);
 
         if (IsEmpty())
         {
@@ -65,7 +65,7 @@ public class LinkedQueue<T>
             return default;
         }
 
-        T value = Head!.Data;
+        var value = Head!.Data;
         Head = Head.Next;
 
         if (Head == null)
@@ -83,7 +83,7 @@ public class LinkedQueue<T>
             return default;
         }
         
-        T value = Head!.Data;
+        var value = Head!.Data;
         if (ShowLogs) Console.WriteLine($"Peeked {value.ToString()}");
         return value;
     }
@@ -97,7 +97,7 @@ public class LinkedQueue<T>
         }
 
         if (ShowLogs) Console.Write("Содержимое очереди: ");
-        Node<T>? current = Head;
+        var current = Head;
         while (current != null)
         {
             if (ShowLogs) Console.Write($"{current.Data} ");
