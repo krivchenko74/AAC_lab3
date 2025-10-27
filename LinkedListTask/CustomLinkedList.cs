@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace Lab3.LinkedListTask
 {
@@ -200,11 +201,16 @@ namespace Lab3.LinkedListTask
             }
 
             var current = Head;
+            Console.Write("[");
+            var output = new StringBuilder();
             while (current != null)
             {
-                Console.Write(current.Data + " ");
+                output.Append(current.Data);
+                if (current.Next != null) output.Append(", ");
                 current = current.Next;
             }
+            Console.Write(output.ToString());
+            Console.Write("]");
             Console.WriteLine();
         }
         
