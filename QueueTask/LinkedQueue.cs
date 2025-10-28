@@ -29,14 +29,14 @@ public class LinkedQueue<T>
         ShowLogs = showLogs;
     }
 
-    public bool IsEmpty()
+    public bool IsEmpty(bool ignore = false)
     {
         if (Head == null)
         {
-            if (ShowLogs) Console.WriteLine("Очередь пуста!");
+            if (ShowLogs && !ignore) Console.WriteLine("Очередь пуста!");
             return true;
         }
-        if (ShowLogs) Console.WriteLine("Очередь не пуста!");
+        if (ShowLogs && !ignore) Console.WriteLine("Очередь не пуста!");
         return false;
     }
     
@@ -44,7 +44,7 @@ public class LinkedQueue<T>
     {
         var node = new Node<T>(elem);
 
-        if (IsEmpty())
+        if (IsEmpty(true))
         {
             Head = Tail = node;
         }
@@ -59,7 +59,7 @@ public class LinkedQueue<T>
 
     public T? Dequeue()
     {
-        if (IsEmpty())
+        if (IsEmpty(true))
         {
             if (ShowLogs) Console.WriteLine("Очередь пуста!");
             return default;
@@ -77,7 +77,7 @@ public class LinkedQueue<T>
 
     public T? Peek()
     {
-        if (IsEmpty())
+        if (IsEmpty(true))
         {
             if (ShowLogs) Console.WriteLine("Очередь пуста!");
             return default;
@@ -90,7 +90,7 @@ public class LinkedQueue<T>
 
     public void Print()
     {
-        if (IsEmpty())
+        if (IsEmpty(true))
         {
             if (ShowLogs) Console.WriteLine("Очередь пуста!");
             return;

@@ -13,11 +13,11 @@ public partial class MainWindow : Window
         public MainWindow()
         {
             DataContext = Tabs;
-            var tabForStackTextAnalyzer = TabGenerator.GenerateTabForStackTextAnalyzer(1_000);
-            Tabs.Add(tabForStackTextAnalyzer);
-            var tab2ForQueueTextAnalyzer = TabGenerator.GenerateTabForQueueTextAnalyzer(2000, CommandMode.Balanced);
-            Tabs.Add(tab2ForQueueTextAnalyzer);
-            var tab3ForQueueTextAnalyzer = TabGenerator.GenerateTabForQueueTextAnalyzer(3000, CommandMode.HeavyEnqueue);
+            // var tabForStackTextAnalyzer = TabGenerator.GenerateTabForStackTextAnalyzer(20_000);
+            // Tabs.Add(tabForStackTextAnalyzer);
+            // var tab2ForQueueTextAnalyzer = TabGenerator.GenerateTabForQueueTextAnalyzer(49000, 50000, CommandMode.Balanced);
+            // Tabs.Add(tab2ForQueueTextAnalyzer);
+            var tab3ForQueueTextAnalyzer = TabGenerator.GenerateTabForQueueTextAnalyzer(0,5000, CommandMode.HeavyIsEmpty, "Attempt number");
             Tabs.Add(tab3ForQueueTextAnalyzer);
             InitializeComponent();
         }

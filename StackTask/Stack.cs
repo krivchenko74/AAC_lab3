@@ -39,24 +39,24 @@ public class Stack<T>
         if (ShowLogs) Console.WriteLine($"Pushed {elem.ToString()}");
     }
     
-    public bool IsEmpty()
+    public bool IsEmpty(bool ignore = false)
     {
         if (top == null)
         {
-            if (ShowLogs) Console.WriteLine("Stack is empty!");
+            if (ShowLogs && !ignore) Console.WriteLine("Stack is empty!");
         }
         else
         {
-            if (ShowLogs) Console.WriteLine("Stack is not empty");
+            if (ShowLogs && !ignore) Console.WriteLine("Stack is not empty");
         }
         return top == null;
     }
 
     public T? Pop()
     {
-        if (IsEmpty())
+        if (IsEmpty(true))
         {
-            // if (ShowLogs) Console.WriteLine("Stack is empty!");
+            if (ShowLogs) Console.WriteLine("Stack is empty!");
             return default;
         }
         var value = top!.Data;
@@ -68,7 +68,7 @@ public class Stack<T>
 
     public T? Peek()
     {
-        if (IsEmpty())
+        if (IsEmpty(true))
         {
             if (ShowLogs) Console.WriteLine("Stack is empty!");
             return default;
@@ -80,7 +80,7 @@ public class Stack<T>
     
     public T? Top()
     {
-        if (IsEmpty())
+        if (IsEmpty(true))
         {
             if (ShowLogs) Console.WriteLine("Stack is empty!");
             return default;
@@ -91,7 +91,7 @@ public class Stack<T>
     
     public void Print()
     {
-        if (IsEmpty())
+        if (IsEmpty(true))
         {
             if (ShowLogs) Console.WriteLine("Stack is empty!");
             return;

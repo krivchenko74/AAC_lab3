@@ -44,6 +44,30 @@ public class Benchmark
         return result;
     }
     
+    public static double[] RunRange(int minN, int maxN, Func<ITask> generateTask, CommandMode mode)
+    {
+        var result = new double[maxN-minN];
+        var commands = InputGenerator.GenerateCommands(maxN, mode);
+
+        for (int i = 0; i < 10; i++)
+        {
+            var task = generateTask();
+            task.Run(commands.Slice(1, 50));
+        } 
+        
+        GC.Collect();
+        GC.WaitForPendingFinalizers(); 
+        
+        for (int n = minN; n < maxN; n++)
+        {
+            var commandsForCurrent = commands.Slice(0, n);
+            var task = generateTask();
+            result[n-minN] = Measure(task, commandsForCurrent);
+        }
+        
+        return result;
+    }
+    
     public static double[] RunNumber(int maxN, Func<ITask> generateTask, CommandMode mode)
     {
         var result = new double[maxN];

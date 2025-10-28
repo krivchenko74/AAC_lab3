@@ -11,7 +11,7 @@ namespace Lab3.RealExamples
             var running = true;
 
             Console.Clear();
-            Console.WriteLine("📝 === Список дел ===\n");
+            Console.WriteLine("📝 === Список дел ===");
 
             while (running)
             {
